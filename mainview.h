@@ -2,6 +2,7 @@
 #define MAINVIEW_H
 
 #include <QMainWindow>
+#include <QKeyEvent>
 #include "pdfview.h"
 class MainView : public QMainWindow
 {
@@ -16,6 +17,7 @@ public slots:
     
 protected:
     virtual void resizeEvent(QResizeEvent *event) override;
+    virtual void keyPressEvent(QKeyEvent *event) override; 
 };
 
 #endif // MAINVIEW_H

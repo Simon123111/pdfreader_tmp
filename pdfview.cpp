@@ -83,3 +83,20 @@ QVector<PageView *> pdfView::pages()
     return m_pages;
 }
 
+int pdfView::setScale(double scale)
+{
+    m_scale = scale;
+    if(m_document == nullptr) return 0;
+    for (int loop_page = 0; loop_page < m_page_number; ++loop_page) {
+        m_pages.at(loop_page)->setScale(scale);
+    }
+    m_pdfView->resize(m_pages.at(0)->width(), m_pages.at(0)->height() * m_page_number + (m_page_number - 1) * 10);
+    return 0;
+}
+
+double pdfView::scale()
+{
+    return m_scale;
+}
+
+

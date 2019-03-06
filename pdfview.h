@@ -19,14 +19,15 @@ public:
     int closeDocument();
     QGridLayout *layout();
     QVector<PageView *> pages();
-    
+    int setScale(double scale);
+    double scale();
 private:
     Poppler::Document *m_document = nullptr;
     QGridLayout *m_layout = nullptr;
     int m_page_number = 0;
     QWidget *m_pdfView = nullptr;
     QVector<PageView *> m_pages;
-    double scale = 1;
+    double m_scale = 1;
 };
 
 #endif // PDFVIEW_H

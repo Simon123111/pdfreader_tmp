@@ -17,3 +17,14 @@ void MainView::resizeEvent(QResizeEvent *event)
     this->view->resize(this->size());
     
 }
+
+void MainView::keyPressEvent(QKeyEvent *event)
+{
+    if(event->modifiers() == (Qt::ControlModifier)) {
+        if(event->key() == Qt::Key_A) {
+            this->view->setScale(this->view->scale() * 1.1);
+        } else if (event->key() == Qt::Key_S) {
+            this->view->setScale(this->view->scale() * 0.9);
+        } 
+    }
+}
