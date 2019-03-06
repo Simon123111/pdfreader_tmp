@@ -18,13 +18,15 @@ public:
     int loadDocument(const QString &file);
     int closeDocument();
     QGridLayout *layout();
-private:
-    Poppler::Document *m_document;
-    QGridLayout *m_layout;
-    int m_page_number;
-    QWidget *m_pdfView;
-    QVector<PageView *> m_pages;
+    QVector<PageView *> pages();
     
+private:
+    Poppler::Document *m_document = nullptr;
+    QGridLayout *m_layout = nullptr;
+    int m_page_number = 0;
+    QWidget *m_pdfView = nullptr;
+    QVector<PageView *> m_pages;
+    double scale = 1;
 };
 
 #endif // PDFVIEW_H

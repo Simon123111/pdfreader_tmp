@@ -6,18 +6,22 @@ pdfView::pdfView(QWidget *parent): QScrollArea (parent)
     //m_pdfView->resize(1280, 10000);
     this->m_layout = new QGridLayout(m_pdfView);
     this->setWidget(m_pdfView);
+    this->setAlignment(Qt::AlignCenter);
     this->m_layout->setVerticalSpacing(10);
     this->resize(1280, 720);
 }
 
 pdfView::~pdfView()
 {
+    closeDocument();
     if(m_document) delete m_document;
     delete m_layout;
+    delete m_pdfView;
 }
 
 Poppler::Document *pdfView::document()
 {
+    
     return m_document;
 }
 
@@ -48,7 +52,7 @@ int pdfView::loadDocument(const QString &file)
     PageView *page = nullptr;
     for (int loop_page = 0; loop_page < m_page_number; ++loop_page) {
         page = new PageView(this->document()->page(loop_page));
-        this->layout()->addWidget(page, loop_page, 0);
+        this->layout()->addWidget(page, loop_page, 0, Qt::AlignCenter);
         this->m_pages.append(page);
     }
     m_pdfView->resize(page->width(), page->height() * m_page_number + (m_page_number - 1) * 10);
@@ -57,11 +61,25 @@ int pdfView::loadDocument(const QString &file)
 
 int pdfView::closeDocument()
 {
+    if(m_document == nullptr) {
+        return 0;
+    }
+    
+    for (int loop_page = 0; loop_page < this->m_page_number; ++loop_page) {
+        delete m_pages.at(loop_page);
+    }
+    m_pages.clear();
+    m_document = nullptr;
     return 0;
 }
 
 QGridLayout *pdfView::layout()
 {
     return m_layout;
+}
+
+QVector<PageView *> pdfView::pages()
+{
+    return m_pages;
 }
 
